@@ -1,6 +1,7 @@
 import Foundation
 import CoreNFC
 
+@available(iOS 13.1, *)
 public class CoreNFCCardChannel: CardChannel {
 
     public enum Error: Swift.Error {
