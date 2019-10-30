@@ -1,9 +1,3 @@
-enum AppInfoTag: UInt8 {
-    case template = 0xA4
-    case pubKey = 0x80
-    case pubData = 0x82
-}
-
 public struct CashApplicationInfo {
     public let secureChannelPubKey: [UInt8]
     public let appVersion: UInt16

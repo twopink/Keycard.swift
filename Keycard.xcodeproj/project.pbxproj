@@ -103,11 +103,9 @@
 		OBJ_237 /* ApplicationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* ApplicationStatus.swift */; };
 		OBJ_238 /* BIP32KeyPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* BIP32KeyPair.swift */; };
 		OBJ_239 /* CardChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* CardChannel.swift */; };
-		OBJ_240 /* CardDuplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* CardDuplicator.swift */; };
 		OBJ_241 /* CardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* CardError.swift */; };
 		OBJ_242 /* CoreNFCCardChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* CoreNFCCardChannel.swift */; };
 		OBJ_243 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* Crypto.swift */; };
-		OBJ_244 /* DuplicatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* DuplicatorDelegate.swift */; };
 		OBJ_245 /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* KeyPath.swift */; };
 		OBJ_246 /* Keycard.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* Keycard.swift */; };
 		OBJ_247 /* KeycardCommandSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* KeycardCommandSet.swift */; };
@@ -186,6 +184,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A7E06642369E45800460CF8 /* CashApplicationInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CashApplicationInfo.swift; sourceTree = "<group>"; };
+		0A7E06652369E45800460CF8 /* CashCommandSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CashCommandSet.swift; sourceTree = "<group>"; };
 		"CryptoSwift::CryptoSwift::Product" /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Keycard::Keycard::Product" /* Keycard.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Keycard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Keycard::KeycardTests::Product" /* KeycardTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = KeycardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,11 +227,9 @@
 		OBJ_14 /* CardChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardChannel.swift; sourceTree = "<group>"; };
 		OBJ_140 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		OBJ_141 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		OBJ_15 /* CardDuplicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDuplicator.swift; sourceTree = "<group>"; };
 		OBJ_16 /* CardError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardError.swift; sourceTree = "<group>"; };
 		OBJ_17 /* CoreNFCCardChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreNFCCardChannel.swift; sourceTree = "<group>"; };
 		OBJ_18 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
-		OBJ_19 /* DuplicatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatorDelegate.swift; sourceTree = "<group>"; };
 		OBJ_20 /* KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPath.swift; sourceTree = "<group>"; };
 		OBJ_21 /* Keycard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keycard.swift; sourceTree = "<group>"; };
 		OBJ_22 /* KeycardCommandSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeycardCommandSet.swift; sourceTree = "<group>"; };
@@ -562,17 +560,17 @@
 		OBJ_8 /* Keycard */ = {
 			isa = PBXGroup;
 			children = (
+				0A7E06642369E45800460CF8 /* CashApplicationInfo.swift */,
+				0A7E06652369E45800460CF8 /* CashCommandSet.swift */,
 				OBJ_9 /* APDUCommand.swift */,
 				OBJ_10 /* APDUResponse.swift */,
 				OBJ_11 /* ApplicationInfo.swift */,
 				OBJ_12 /* ApplicationStatus.swift */,
 				OBJ_13 /* BIP32KeyPair.swift */,
 				OBJ_14 /* CardChannel.swift */,
-				OBJ_15 /* CardDuplicator.swift */,
 				OBJ_16 /* CardError.swift */,
 				OBJ_17 /* CoreNFCCardChannel.swift */,
 				OBJ_18 /* Crypto.swift */,
-				OBJ_19 /* DuplicatorDelegate.swift */,
 				OBJ_20 /* KeyPath.swift */,
 				OBJ_21 /* Keycard.swift */,
 				OBJ_22 /* KeycardCommandSet.swift */,
@@ -866,11 +864,9 @@
 				OBJ_237 /* ApplicationStatus.swift in Sources */,
 				OBJ_238 /* BIP32KeyPair.swift in Sources */,
 				OBJ_239 /* CardChannel.swift in Sources */,
-				OBJ_240 /* CardDuplicator.swift in Sources */,
 				OBJ_241 /* CardError.swift in Sources */,
 				OBJ_242 /* CoreNFCCardChannel.swift in Sources */,
 				OBJ_243 /* Crypto.swift in Sources */,
-				OBJ_244 /* DuplicatorDelegate.swift in Sources */,
 				OBJ_245 /* KeyPath.swift in Sources */,
 				OBJ_246 /* Keycard.swift in Sources */,
 				OBJ_247 /* KeycardCommandSet.swift in Sources */,

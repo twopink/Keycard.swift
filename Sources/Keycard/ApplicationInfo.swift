@@ -4,6 +4,7 @@ enum AppInfoTag: UInt8 {
     case uid = 0x8f
     case keyUID = 0x8e
     case capabilities = 0x8d
+    case pubData = 0x82
 }
 
 enum AppCapability: UInt8 {
