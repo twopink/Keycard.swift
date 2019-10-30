@@ -12,10 +12,10 @@
       },
       {
         "package": "secp256k1",
-        "repositoryURL": "https://github.com/status-im/secp256k1.swift.git",
+        "repositoryURL": "https://github.com/gnosis/secp256k1.swift.git",
         "state": {
           "branch": "master",
-          "revision": "d2c49786e9245d77f4eba6ce78a87f87506623c5",
+          "revision": "76b5d092dbf295c9f73a93fdc195ecf2bbacbf2a",
           "version": null
         }
       }
