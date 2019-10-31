@@ -187,7 +187,7 @@
 		0A7E06642369E45800460CF8 /* CashApplicationInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CashApplicationInfo.swift; sourceTree = "<group>"; };
 		0A7E06652369E45800460CF8 /* CashCommandSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CashCommandSet.swift; sourceTree = "<group>"; };
 		"CryptoSwift::CryptoSwift::Product" /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"Keycard::Keycard::Product" /* Keycard.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Keycard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"Keycard::Keycard::Product" /* Keycard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keycard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Keycard::KeycardTests::Product" /* KeycardTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = KeycardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* APDUResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APDUResponse.swift; sourceTree = "<group>"; };
 		OBJ_100 /* PKCS7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCS7.swift; sourceTree = "<group>"; };
@@ -738,6 +738,11 @@
 			attributes = {
 				LastSwiftMigration = 9999;
 				LastUpgradeCheck = 9999;
+				TargetAttributes = {
+					"secp256k1::secp256k1" = {
+						ProvisioningStyle = Manual;
+					};
+				};
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "Keycard" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -966,7 +971,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Keycard.xcodeproj/CryptoSwift_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -991,7 +996,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Keycard.xcodeproj/CryptoSwift_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -1037,7 +1042,7 @@
 				);
 				INFOPLIST_FILE = Keycard.xcodeproj/Keycard_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1068,7 +1073,7 @@
 				);
 				INFOPLIST_FILE = Keycard.xcodeproj/Keycard_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1175,7 +1180,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1192,8 +1201,7 @@
 					"$(SRCROOT)/.build/checkouts/secp256k1.swift/secp256k1/Classes",
 				);
 				INFOPLIST_FILE = Keycard.xcodeproj/secp256k1_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = "$(SRCROOT)/.build/checkouts/secp256k1.swift/include/module.modulemap";
 				OTHER_CFLAGS = "$(inherited)";
@@ -1203,9 +1211,11 @@
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				TARGET_NAME = secp256k1;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VERSIONING_SYSTEM = "apple-generic";
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
@@ -1214,7 +1224,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1231,8 +1245,7 @@
 					"$(SRCROOT)/.build/checkouts/secp256k1.swift/secp256k1/Classes",
 				);
 				INFOPLIST_FILE = Keycard.xcodeproj/secp256k1_Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = "$(SRCROOT)/.build/checkouts/secp256k1.swift/include/module.modulemap";
 				OTHER_CFLAGS = "$(inherited)";
@@ -1242,9 +1255,11 @@
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				TARGET_NAME = secp256k1;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VERSIONING_SYSTEM = "apple-generic";
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
@@ -1270,7 +1285,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE DEBUG";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USE_HEADERMAP = NO;
@@ -1313,7 +1328,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				USE_HEADERMAP = NO;
