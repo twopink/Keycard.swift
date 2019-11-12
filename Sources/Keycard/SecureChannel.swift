@@ -16,10 +16,10 @@ class SecureChannel {
     private var sessionEncKey: [UInt8]
     private var sessionMacKey: [UInt8]
     
-    func generateSecret(pubKey: [UInt8]) {
-        let (privKey, clientPubKey) = Crypto.shared.secp256k1GeneratePair()
+    func generateSecret(pubKey: [UInt8]) throws {
+        let (privKey, clientPubKey) = try Crypto.shared.secp256k1GeneratePair()
         self.publicKey = clientPubKey
-        self.secret = Crypto.shared.secp256k1ECDH(privKey: privKey, pubKey: pubKey)
+        self.secret = try Crypto.shared.secp256k1ECDH(privKey: privKey, pubKey: pubKey)
     }
 
     func reset() {

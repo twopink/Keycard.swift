@@ -3,12 +3,12 @@ import XCTest
 
 final class CryptoTests: XCTestCase {
 
-    func test_encrypt_decrypt() {
+    func test_encrypt_decrypt() throws {
         let plaintext = "Hello, World!"
         let plaintextBytes = [UInt8](plaintext.utf8)
 
-        let (sk, pk) = Crypto.shared.secp256k1GeneratePair()
-        let secret = Crypto.shared.secp256k1ECDH(privKey: sk, pubKey: pk)
+        let (sk, pk) = try Crypto.shared.secp256k1GeneratePair()
+        let secret = try Crypto.shared.secp256k1ECDH(privKey: sk, pubKey: pk)
         let iv = Crypto.shared.random(count: SecureChannel.blockLength)
         let encrypted = Crypto.shared.aes256Enc(data: Crypto.shared.iso7816_4Pad(data: plaintextBytes, blockSize: SecureChannel.blockLength), iv: iv, key: secret)
         let decrypted = Crypto.shared.iso7816_4Unpad(data: Crypto.shared.aes256Dec(data: encrypted, iv: iv, key: secret))

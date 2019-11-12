@@ -20,7 +20,7 @@ public struct RecoverableSignature {
         var foundID: UInt8 = UInt8.max
         
         for i: UInt8 in 0...3 {
-            let pub = Crypto.shared.secp256k1RecoverPublic(r: r, s: s, recId: i, hash: hash)
+            let pub = try Crypto.shared.secp256k1RecoverPublic(r: r, s: s, recId: i, hash: hash)
             if (pub == self.publicKey) {
                 foundID = i
                 break

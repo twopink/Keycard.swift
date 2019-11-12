@@ -44,7 +44,7 @@ class Mnemonic {
         Mnemonic.toBinarySeed(mnemonicPhrase: toMnemonicPhrase(), password: password)
     }
     
-    func toBIP32KeyPair(password: String = "") -> BIP32KeyPair {
-        BIP32KeyPair(fromSeed: toBinarySeed(password: password))
+    func toBIP32KeyPair(password: String = "") throws -> BIP32KeyPair {
+        return try BIP32KeyPair(fromSeed: toBinarySeed(password: password))
     }
 }
