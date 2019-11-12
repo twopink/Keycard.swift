@@ -64,10 +64,10 @@ final class KeycardTests: XCTestCase {
         XCTAssertEqual(mnemonic.toBinarySeed(), [0x40, 0x32, 0x9e, 0xad, 0x62, 0xf7, 0xc4, 0x6b, 0x5a, 0x84, 0xb7, 0x2b, 0xa3, 0xee, 0xfd, 0x6a, 0x91, 0xc8, 0x22, 0x67, 0xa5, 0xb1, 0x29, 0xfa, 0x88, 0xec, 0x00, 0x2b, 0x59, 0x3d, 0x5a, 0x24, 0xd5, 0xf6, 0x16, 0xaf, 0xd2, 0x08, 0xba, 0x75, 0x4d, 0xeb, 0xcd, 0x66, 0x91, 0x1a, 0x28, 0x9f, 0x1a, 0x76, 0x04, 0x5a, 0x6a, 0x30, 0x87, 0x5b, 0x0e, 0xe7, 0x08, 0x47, 0x87, 0x49, 0x67, 0x5a])
     }
     
-    func testRecoverableSignature() {
-        let (priv, pub) = Crypto.shared.secp256k1GeneratePair()
+    func testRecoverableSignature() throws {
+        let (priv, pub) = try Crypto.shared.secp256k1GeneratePair()
         let hash = Crypto.shared.random(count: 32)
-        let sig = Crypto.shared.secp256k1Sign(hash: hash, privKey: priv)
+        let sig = try Crypto.shared.secp256k1Sign(hash: hash, privKey: priv)
         let data: [UInt8] = [0xa0, UInt8(sig.count + pub.count + 2), 0x80, UInt8(pub.count)] + pub + sig
         let recoverableSig = try! RecoverableSignature(hash: hash, data: data)
         XCTAssertEqual(recoverableSig.publicKey, pub)
@@ -75,8 +75,8 @@ final class KeycardTests: XCTestCase {
         XCTAssertEqual(recoverableSig.s.count, 32)
     }
     
-    func testBIP32KeyPair() {
-        let bip32pair = BIP32KeyPair(fromSeed: Crypto.shared.sha256(Crypto.shared.random(count: 32)))
+    func testBIP32KeyPair() throws {
+        let bip32pair = try BIP32KeyPair(fromSeed: Crypto.shared.sha256(Crypto.shared.random(count: 32)))
         XCTAssertTrue(bip32pair.isExtended)
         XCTAssertFalse(bip32pair.isPublicOnly)
         XCTAssertEqual(bip32pair.publicKey.count, 65)
@@ -103,11 +103,11 @@ final class KeycardTests: XCTestCase {
         XCTAssertEqual(notExtended.publicKey.count, 65)
     }
     
-    func testSecureChannel() {
-        let (priv, pub) = Crypto.shared.secp256k1GeneratePair()
+    func testSecureChannel() throws {
+        let (priv, pub) = try Crypto.shared.secp256k1GeneratePair()
         let secureChannel = SecureChannel()
-        secureChannel.generateSecret(pubKey: pub)
-        XCTAssertEqual(secureChannel.secret!, Crypto.shared.secp256k1ECDH(privKey: priv, pubKey: secureChannel.publicKey!))
+        try secureChannel.generateSecret(pubKey: pub)
+        XCTAssertEqual(secureChannel.secret!, try Crypto.shared.secp256k1ECDH(privKey: priv, pubKey: secureChannel.publicKey!))
         
         var clientChallenge: [UInt8]? = nil
         var pairing: [UInt8] = []

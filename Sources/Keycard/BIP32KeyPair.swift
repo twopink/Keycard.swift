@@ -13,7 +13,7 @@ public struct BIP32KeyPair {
     public var isPublicOnly: Bool { get { privateKey == nil } }
     public var isExtended: Bool { get { chainCode != nil } }
     
-    public init(privateKey: [UInt8]?, chainCode: [UInt8]?, publicKey: [UInt8]?) {
+    public init(privateKey: [UInt8]?, chainCode: [UInt8]?, publicKey: [UInt8]?) throws {
         precondition(privateKey != nil || (chainCode == nil && publicKey != nil))
         
         if (privateKey != nil) {
@@ -27,13 +27,13 @@ public struct BIP32KeyPair {
         if let pubKey = publicKey {
             self.publicKey = pubKey
         } else {
-            self.publicKey = Crypto.shared.secp256k1PublicFromPrivate(privateKey!)
+            self.publicKey = try Crypto.shared.secp256k1PublicFromPrivate(privateKey!)
         }
     }
     
-    public init(fromSeed binarySeed: [UInt8]) {
+    public init(fromSeed binarySeed: [UInt8]) throws {
         let mac = Crypto.shared.hmacSHA512(data: binarySeed, key: Array("Bitcoin Seed".utf8))
-        self.init(privateKey: Array(mac[0..<32]), chainCode: Array(mac[32...]), publicKey: nil)
+        try self.init(privateKey: Array(mac[0..<32]), chainCode: Array(mac[32...]), publicKey: nil)
     }
     
     public init(fromTLV tlvData: [UInt8]) throws {
@@ -74,7 +74,7 @@ public struct BIP32KeyPair {
             chain = nil
         }
         
-        self.init(privateKey: privKey, chainCode: chain, publicKey: pubKey)
+        try self.init(privateKey: privKey, chainCode: chain, publicKey: pubKey)
     }
     
     public func toTLV(includePublic: Bool = true) -> [UInt8] {

@@ -8,6 +8,17 @@ enum PBKDF2HMac {
     case sha512
 }
 
+public enum KeycardCryptoError: Error {
+    case invalidPublicKey
+    case invalidSecretKey
+    case ecdhFailed
+    case incorrectSignature
+    case invalidSignatureFormat
+    case signFailed
+    case signatureSerializationFailed
+    case publicKeySerializationFailed
+}
+
 class Crypto {
     static let shared = Crypto()
     
@@ -119,22 +130,27 @@ class Crypto {
         Digest.sha3(data, variant: .keccak256)
     }
 
-    func secp256k1GeneratePair() -> ([UInt8], [UInt8]) {
+    func secp256k1GeneratePair() throws -> ([UInt8], [UInt8]) {
         var secretKey: [UInt8]
         
         repeat {
             secretKey = random(count: 32)
         } while secp256k1_ec_seckey_verify(secp256k1Ctx, &secretKey) != Int32(1)
 
-        return (secretKey, secp256k1PublicFromPrivate(secretKey))
+        return try (secretKey, secp256k1PublicFromPrivate(secretKey))
     }
     
-    func secp256k1ECDH(privKey: [UInt8], pubKey pubKeyBytes: [UInt8]) -> [UInt8] {
+    func secp256k1ECDH(privKey: [UInt8], pubKey pubKeyBytes: [UInt8]) throws -> [UInt8] {
         var pubKey = secp256k1_pubkey()
         var ecdhOut = [UInt8](repeating: 0, count: 32)
-        _ = secp256k1_ec_pubkey_parse(secp256k1Ctx, &pubKey, pubKeyBytes, pubKeyBytes.count)
-        _ = secp256k1_ecdh(secp256k1Ctx, &ecdhOut, &pubKey, privKey, { (output, x, _, _) -> Int32 in memcpy(output, x, 32); return 1 }, nil)
-        
+        let parseStatus = secp256k1_ec_pubkey_parse(secp256k1Ctx, &pubKey, pubKeyBytes, pubKeyBytes.count)
+        guard parseStatus == 1 else {
+            throw KeycardCryptoError.invalidPublicKey
+        }
+        let ecdhStatus = secp256k1_ecdh(secp256k1Ctx, &ecdhOut, &pubKey, privKey, { (output, x, _, _) -> Int32 in memcpy(output, x, 32); return 1 }, nil)
+        guard ecdhStatus == 1 else {
+            throw KeycardCryptoError.ecdhFailed
+        }
         return ecdhOut
     }
     
@@ -142,37 +158,57 @@ class Crypto {
         Array(keccak256(Array(pubKey[1...]))[12...])
     }
     
-    func secp256k1PublicFromPrivate(_ privKey: [UInt8]) -> [UInt8] {
+    func secp256k1PublicFromPrivate(_ privKey: [UInt8]) throws -> [UInt8] {
         var pubKey = secp256k1_pubkey()
-        _ = secp256k1_ec_pubkey_create(secp256k1Ctx, &pubKey, privKey)
-        return _secp256k1PubToBytes(&pubKey)
+        let createStatus = secp256k1_ec_pubkey_create(secp256k1Ctx, &pubKey, privKey)
+        guard createStatus == 1 else {
+            throw KeycardCryptoError.invalidSecretKey
+        }
+        return try serializedPublicKey(&pubKey)
     }
     
-    func secp256k1RecoverPublic(r: [UInt8], s: [UInt8], recId: UInt8, hash: [UInt8]) -> [UInt8] {
+    func secp256k1RecoverPublic(r: [UInt8], s: [UInt8], recId: UInt8, hash: [UInt8]) throws -> [UInt8] {
         var sig = secp256k1_ecdsa_recoverable_signature()
-        _ = secp256k1_ecdsa_recoverable_signature_parse_compact(secp256k1Ctx, &sig, r + s, Int32(recId))
+        let parseStatus = secp256k1_ecdsa_recoverable_signature_parse_compact(secp256k1Ctx, &sig, r + s, Int32(recId))
+        guard parseStatus == 1 else {
+            throw KeycardCryptoError.invalidSignatureFormat
+        }
         
         var pubKey = secp256k1_pubkey()
-        _ = secp256k1_ecdsa_recover(secp256k1Ctx, &pubKey, &sig, hash)
-        return _secp256k1PubToBytes(&pubKey)
+        let recoverStatus = secp256k1_ecdsa_recover(secp256k1Ctx, &pubKey, &sig, hash)
+        guard recoverStatus == 1 else {
+            throw KeycardCryptoError.incorrectSignature
+        }
+        return try serializedPublicKey(&pubKey)
     }
     
-    func secp256k1Sign(hash: [UInt8], privKey: [UInt8]) -> [UInt8] {
+    func secp256k1Sign(hash: [UInt8], privKey: [UInt8]) throws -> [UInt8] {
         var sig = secp256k1_ecdsa_signature()
 
-        _ = secp256k1_ecdsa_sign(secp256k1Ctx, &sig, hash, privKey, nil, nil)
+        let signStatus = secp256k1_ecdsa_sign(secp256k1Ctx, &sig, hash, privKey, nil, nil)
+        guard signStatus == 1 else {
+            throw KeycardCryptoError.signFailed
+        }
         var derSig = [UInt8](repeating: 0, count: 72)
         var derOutLen = 72
 
-        secp256k1_ecdsa_signature_serialize_der(secp256k1Ctx, &derSig, &derOutLen, &sig)
+        let serializeStatus = secp256k1_ecdsa_signature_serialize_der(secp256k1Ctx, &derSig, &derOutLen, &sig)
+        guard serializeStatus == 1 else {
+            throw KeycardCryptoError.signatureSerializationFailed
+        }
         return Array(derSig[0..<derOutLen])
     }
     
-    private func _secp256k1PubToBytes(_ pubKey: inout secp256k1_pubkey) -> [UInt8] {
+    private func serializedPublicKey(_ pubKey: inout secp256k1_pubkey) throws -> [UInt8] {
         var pubKeyBytes = [UInt8](repeating: 0, count: 65)
         var outputLen = 65
-        _ = secp256k1_ec_pubkey_serialize(secp256k1Ctx, &pubKeyBytes, &outputLen, &pubKey, UInt32(SECP256K1_EC_UNCOMPRESSED))
-        
+        let serializeStatus = secp256k1_ec_pubkey_serialize(secp256k1Ctx, &pubKeyBytes, &outputLen, &pubKey, UInt32(SECP256K1_EC_UNCOMPRESSED))
+        // even though the docs says that the function always returns 1,
+        // for double-checking that we correctly use the secp256k1 API we check
+        // the status
+        guard serializeStatus == 1 else {
+            throw KeycardCryptoError.publicKeySerializationFailed
+        }
         return pubKeyBytes
     }
     

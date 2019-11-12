@@ -28,7 +28,7 @@ public class KeycardCommandSet {
             info = try ApplicationInfo(resp.data)
 
             if (info!.hasSecureChannelCapability) {
-                secureChannel.generateSecret(pubKey: info!.secureChannelPubKey)
+                try secureChannel.generateSecret(pubKey: info!.secureChannelPubKey)
                 secureChannel.reset()
             }
         }

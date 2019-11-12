@@ -3,7 +3,7 @@ enum TLVTag: UInt8 {
     case int = 0x02
 }
 
-enum TLVError: Error {
+public enum TLVError: Error {
     case unexpectedTag(expected: UInt8, actual: UInt8)
     case unexpectedLength(length: Int)
     case endOfTLV
