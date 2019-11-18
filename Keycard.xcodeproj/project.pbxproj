@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0AE72A402382DC7700200C76 /* CoreNFC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE72A3F2382DC7700200C76 /* CoreNFC.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		OBJ_147 /* AEAD.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* AEAD.swift */; };
 		OBJ_148 /* AEADChaCha20Poly1305.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* AEADChaCha20Poly1305.swift */; };
 		OBJ_149 /* AES.Cryptors.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_46 /* AES.Cryptors.swift */; };
@@ -186,6 +187,7 @@
 /* Begin PBXFileReference section */
 		0A7E06642369E45800460CF8 /* CashApplicationInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CashApplicationInfo.swift; sourceTree = "<group>"; };
 		0A7E06652369E45800460CF8 /* CashCommandSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CashCommandSet.swift; sourceTree = "<group>"; };
+		0AE72A3F2382DC7700200C76 /* CoreNFC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreNFC.framework; path = System/Library/Frameworks/CoreNFC.framework; sourceTree = SDKROOT; };
 		"CryptoSwift::CryptoSwift::Product" /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Keycard::Keycard::Product" /* Keycard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keycard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Keycard::KeycardTests::Product" /* KeycardTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = KeycardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -318,6 +320,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
+				0AE72A402382DC7700200C76 /* CoreNFC.framework in Frameworks */,
 				OBJ_259 /* CryptoSwift.framework in Frameworks */,
 				OBJ_260 /* secp256k1.framework in Frameworks */,
 			);
@@ -343,6 +346,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0AE72A3E2382DC7700200C76 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0AE72A3F2382DC7700200C76 /* CoreNFC.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		OBJ_123 /* secp256k1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,6 +523,7 @@
 				OBJ_139 /* LICENSE */,
 				OBJ_140 /* Makefile */,
 				OBJ_141 /* README.md */,
+				0AE72A3E2382DC7700200C76 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

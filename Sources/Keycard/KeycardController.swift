@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(CoreNFC)
 import CoreNFC
+#endif
 
 @available(iOS 13.1, *)
 open class KeycardController: NSObject {

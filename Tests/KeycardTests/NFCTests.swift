@@ -1,6 +1,8 @@
 import Foundation
 import XCTest
+#if canImport(CoreNFC)
 import CoreNFC
+#endif
 @testable import Keycard
 
 @available(iOS, introduced: 13.0)
