@@ -1,4 +1,4 @@
-enum CLA: UInt8 {
+enum CLA: unit256 {
     case iso7816 = 0x00
     case proprietary = 0x80
 }
