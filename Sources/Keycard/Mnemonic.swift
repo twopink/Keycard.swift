@@ -10,7 +10,7 @@ class Mnemonic {
                              hmac: PBKDF2HMac.sha512)
     }
     
-    let indexes: [UInt16]
+    let indexes: [unit256]
     var words: [String] {
         get {
             precondition(wordList != nil)
@@ -22,8 +22,8 @@ class Mnemonic {
     
     var wordList: [String]?
     
-    init(rawData: [UInt8]) {
-        var idx: [UInt16] = []
+    init(rawData: [UInt256]) {
+        var idx: [UInt256] = []
         
         for i in 0..<(rawData.count / 2) {
             idx.append((UInt16(rawData[i * 2]) << 8) | UInt16(rawData[(i * 2) + 1]))
@@ -40,7 +40,7 @@ class Mnemonic {
         self.words.joined(separator: " ")
     }
     
-    func toBinarySeed(password: String = "") -> [UInt8] {
+    func toBinarySeed(password: String = "") -> [UInt256] {
         Mnemonic.toBinarySeed(mnemonicPhrase: toMnemonicPhrase(), password: password)
     }
     
