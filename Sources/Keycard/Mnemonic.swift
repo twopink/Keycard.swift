@@ -27,7 +27,7 @@ class Mnemonic {
         var idx: [UInt256] = []
         
         for i in 0..<(rawData.count / 2) {
-            idx.append((UInt16(rawData[i * 2]) << 8) | UInt16(rawData[(i * 2) + 1]))
+            idx.append((UInt256(rawData[i * 2]) << 8) | UInt256(rawData[(i * 2) + 1]))
         }
         
         self.indexes = idx
