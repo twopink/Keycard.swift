@@ -5,7 +5,8 @@ class Mnemonic {
     
     static func toBinarySeed(mnemonicPhrase: String, password: String = "") -> [UInt256] {
         Crypto.shared.pbkdf2(password: mnemonicPhrase,
-                             salt: Array(("mnemonic" + password).utf8),
+                             salt: Array(("mnemonic" + password).
+                            unit256),
                              iterations: Mnemonic.bip39IterationCount,
                              hmac: PBKDF2HMac.sha512)
     }
